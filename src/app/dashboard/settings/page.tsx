@@ -109,7 +109,7 @@ export default function BrandSettingsPage() {
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      showToast("Logo size should be under 2MB for fast loading.");
+      showToast("Logo must be under 2MB.");
       return;
     }
 
@@ -127,7 +127,7 @@ export default function BrandSettingsPage() {
     playClick();
     setBrand((prev) => ({ ...prev, logoUrl: undefined }));
     if (fileInputRef.current) fileInputRef.current.value = "";
-    showToast("Brand logo removed. Reverting to monogram avatar.");
+    showToast("Logo removed.");
   };
 
   const handleSaveBrandDetails = (e?: React.FormEvent) => {
@@ -153,14 +153,14 @@ export default function BrandSettingsPage() {
 
     setTimeout(() => {
       setIsSaving(false);
-      showToast(`Brand details for "${updatedBrand.businessName}" saved and published live!`);
+      showToast("Brand saved.");
     }, 300);
   };
 
   const handleResetToCurrent = () => {
     playClick();
     setBrand(getOvelink(currentSlug));
-    showToast("Reverted unsaved edits to last published brand state.");
+    showToast("Reverted unsaved edits.");
   };
 
   return (
@@ -178,18 +178,18 @@ export default function BrandSettingsPage() {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#105F68]/10 text-[#105F68] font-medium tracking-wider uppercase">
-              Brand Identity &amp; Tenant Details
+              Brand
             </span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center gap-1 font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live Synced
+              Saved
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-[#105F68] tracking-tight">
-            Brand Details &amp; Customization
+            Settings
           </h1>
           <p className="text-xs text-[#3A9295] font-light mt-0.5 max-w-xl">
-            Update your business name, public URL slug, custom logo, visual themes, typography fonts, and contact channels. All changes reflect instantly on your customer-facing Ovelink page.
+            Brand, contact, and theme.
           </p>
         </div>
 
@@ -200,7 +200,7 @@ export default function BrandSettingsPage() {
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-black/10 bg-[#F6FAF9] hover:bg-white text-xs text-[#105F68] transition-all shadow-sm"
           >
             {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-[#3A9295]" />}
-            <span>{copiedLink ? "Link Copied" : "Copy Brand Link"}</span>
+            <span>{copiedLink ? "Copied" : "Copy link"}</span>
           </button>
 
           <Link
@@ -209,7 +209,7 @@ export default function BrandSettingsPage() {
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#105F68]/20 bg-white hover:bg-[#F6FAF9] text-xs text-[#105F68] transition-all shadow-sm"
           >
             <ExternalLink className="w-3.5 h-3.5 text-[#3A9295]" />
-            <span>Open Public Page</span>
+            <span>Open page</span>
           </Link>
 
           <button
@@ -218,22 +218,22 @@ export default function BrandSettingsPage() {
             className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#105F68] hover:bg-[#0D4F57] text-white text-xs font-medium shadow-md shadow-[#105F68]/20 transition-all active:scale-95 disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
-            <span>{isSaving ? "Publishing..." : "Save Brand Details"}</span>
+            <span>{isSaving ? "Saving..." : "Save"}</span>
           </button>
         </div>
       </div>
 
-      {/* Main Grid: Settings Controls (Left 7) vs Live Preview (Right 5) */}
+      {/* Main Grid: Settings Controls (Left 7) vs Preview (Right 5) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Form Controls */}
         <div className="lg:col-span-7 bg-white rounded-3xl border border-[#105F68]/10 shadow-sm p-6 sm:p-8 space-y-6">
           {/* Navigation Subtabs */}
           <div className="flex flex-wrap items-center gap-1.5 border-b border-black/5 pb-3">
             {[
-              { id: "identity" as const, label: "Brand Identity & Bio", icon: Building2 },
-              { id: "palette" as const, label: "Colors & Palette", icon: Palette },
-              { id: "typography" as const, label: "Typography & Shapes", icon: Type },
-              { id: "channels" as const, label: "Contact & Localization", icon: Phone },
+              { id: "identity" as const, label: "Brand", icon: Building2 },
+              { id: "palette" as const, label: "Colors", icon: Palette },
+              { id: "typography" as const, label: "Typography", icon: Type },
+              { id: "channels" as const, label: "Contact", icon: Phone },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -263,7 +263,7 @@ export default function BrandSettingsPage() {
               {/* Business Name */}
               <div>
                 <label className="text-[#3A9295] font-medium block mb-1">
-                  Brand / Business Name <span className="text-red-500">*</span>
+                  Business name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -308,7 +308,7 @@ export default function BrandSettingsPage() {
               {/* Tagline & Monogram */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[#3A9295] font-medium block mb-1">Tagline / Headline</label>
+                  <label className="text-[#3A9295] font-medium block mb-1">Tagline</label>
                   <input
                     type="text"
                     value={brand.businessTagline}
@@ -318,7 +318,7 @@ export default function BrandSettingsPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-[#3A9295] font-medium block mb-1">Avatar Monogram (2-3 Chars)</label>
+                  <label className="text-[#3A9295] font-medium block mb-1">Monogram</label>
                   <input
                     type="text"
                     maxLength={3}
@@ -335,7 +335,7 @@ export default function BrandSettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <ImageIcon className="w-4 h-4 text-[#105F68]" />
-                    <span className="font-medium text-[#105F68]">Custom Brand Logo</span>
+                    <span className="font-medium text-[#105F68]">Logo</span>
                   </div>
                   {brand.logoUrl && (
                     <button
@@ -425,19 +425,19 @@ export default function BrandSettingsPage() {
               </div>
 
               <div>
-                <label className="text-[#3A9295] font-medium block mb-1">Business Bio &amp; About Story</label>
+                <label className="text-[#3A9295] font-medium block mb-1">About</label>
                 <textarea
                   rows={3}
                   value={brand.businessBio}
                   onChange={(e) => setBrand({ ...brand, businessBio: e.target.value })}
-                  placeholder="Share your boutique narrative, specialist credentials, or client philosophy..."
+                  placeholder="Tell clients about your business."
                   className="w-full px-4 py-2.5 rounded-xl bg-[#F6FAF9] border border-black/10 text-xs text-[#105F68] focus:outline-none focus:border-[#105F68] focus:bg-white"
                 />
               </div>
 
               {/* Cover Gradient Selection */}
               <div>
-                <label className="text-[#3A9295] font-medium block mb-2">Cover Banner Gradient</label>
+                <label className="text-[#3A9295] font-medium block mb-2">Cover</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {COVER_GRADIENTS.map((grad) => (
                     <div
@@ -470,9 +470,9 @@ export default function BrandSettingsPage() {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-xs font-semibold text-[#105F68] uppercase tracking-wider">
-                    Curated 1-Click Color Presets
+                    Presets
                   </h4>
-                  <span className="text-[11px] text-[#3A9295]">Tailored for accessibility &amp; contrast</span>
+                  <span className="text-[11px] text-[#3A9295]">Accessible contrast</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {THEME_PRESETS.map((preset) => (
@@ -528,7 +528,7 @@ export default function BrandSettingsPage() {
                   <div className="p-3.5 rounded-2xl bg-[#F6FAF9] border border-black/5 flex items-center justify-between">
                     <div>
                       <label className="text-[#3A9295] font-medium block text-xs">Accent Highlight Color</label>
-                      <span className="text-[10px] text-[#3A9295]/80">Badges, badges, sparkles</span>
+                      <span className="text-[10px] text-[#3A9295]/80">Highlights and accents</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
@@ -572,7 +572,7 @@ export default function BrandSettingsPage() {
                   <div className="p-3.5 rounded-2xl bg-[#F6FAF9] border border-black/5 flex items-center justify-between">
                     <div>
                       <label className="text-[#3A9295] font-medium block text-xs">Card Surface Shade</label>
-                      <span className="text-[10px] text-[#3A9295]/80">Offerings &amp; card fill</span>
+                      <span className="text-[10px] text-[#3A9295]/80">Card fill</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <input
@@ -805,7 +805,7 @@ export default function BrandSettingsPage() {
               className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#105F68] hover:bg-[#0D4F57] text-white text-xs font-semibold shadow-md shadow-[#105F68]/20 transition-all active:scale-95 disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
-              <span>{isSaving ? "Saving..." : "Save Brand Details"}</span>
+              <span>{isSaving ? "Saving..." : "Save"}</span>
             </button>
           </div>
         </div>
@@ -815,7 +815,7 @@ export default function BrandSettingsPage() {
           {/* Preview Controls Bar */}
           <div className="p-3 rounded-2xl bg-white border border-[#105F68]/10 shadow-sm flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-[#105F68]">Live Preview</span>
+              <span className="text-xs font-semibold text-[#105F68]">Preview</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#105F68]/10 text-[#105F68]">
                 Real-time
               </span>

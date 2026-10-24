@@ -11,10 +11,10 @@ export default function DashboardStaffPage() {
     <div className="space-y-6 animate-in fade-in duration-200">
       <div>
         <h1 className="text-2xl sm:text-3xl font-light text-[#105F68] tracking-tight">
-          Specialists &amp; Staff Shift Engine
+          Staff
         </h1>
         <p className="text-xs text-[#3A9295] mt-1">
-          Working hours and active shift intervals directly calculate available slots in your public Ovelink.
+          Shifts and availability.
         </p>
       </div>
 
@@ -23,9 +23,9 @@ export default function DashboardStaffPage() {
           <div className="w-12 h-12 rounded-2xl bg-[#C8E6E2]/40 text-[#105F68] flex items-center justify-center mx-auto">
             <Users className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-light text-[#105F68]">No staff specialists added yet</h3>
+          <h3 className="text-base font-light text-[#105F68]">No staff yet</h3>
           <p className="text-xs text-[#3A9295] max-w-md mx-auto">
-            Specialists and shift schedules added here will power calendar availability, round-robin distribution, and collective bookings.
+            Add staff to set availability.
           </p>
         </div>
       ) : (
@@ -48,7 +48,7 @@ export default function DashboardStaffPage() {
 
               <div className="pt-3 border-t border-black/5 space-y-2">
                 <span className="text-[11px] uppercase tracking-wider font-semibold text-[#3A9295]">
-                  Weekly Shift Schedule
+                  Schedule
                 </span>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   {Object.entries(st.workingHours).map(([day, shift]) => (

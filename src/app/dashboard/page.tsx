@@ -79,7 +79,7 @@ export default function DashboardOverviewPage() {
       playSuccess();
       showToast(`$25.00 no-show fee charged to card •••• ${updated.cardLast4}.`);
     } else {
-      showToast("No-show fee was not charged. A card must be on file, and the booking cannot already be closed.");
+      showToast("No-show fee not charged. Add a card or reopen the booking.");
     }
   };
 
@@ -88,7 +88,7 @@ export default function DashboardOverviewPage() {
     const all = getBookings();
     const updated = all.map(b => b.id === bookingId ? { ...b, status: "completed" as const } : b);
     saveBookings(updated);
-    showToast("Booking marked completed! Triggered automatic 2h review request & 4-week rebooking schedule.");
+    showToast("Booking completed.");
   };
 
   const handleDispatchWaitlist = () => {
@@ -108,9 +108,9 @@ export default function DashboardOverviewPage() {
     if (newBooking) {
       playSuccess();
       setIsWaitlistModalOpen(false);
-      showToast(`Slot claimed by ${newBooking.clientName}! Revenue recovered.`);
+      showToast(`Slot claimed by ${newBooking.clientName}.`);
     } else {
-      showToast("That waitlist spot could not be claimed. It may already be taken or the time is booked.");
+      showToast("Could not claim the slot. It may be taken.");
     }
   };
 
@@ -157,20 +157,17 @@ export default function DashboardOverviewPage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#3A9295]">
-              Executive Command Hub
-            </span>
-            <span className="text-slate-300">•</span>
+
             <span className="text-[11px] text-[#3A9295]">
               {profile?.organizationName || "Lumina Atelier & Clinic"}
             </span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-light text-[#105F68] tracking-tight mt-1">
-            Operations &amp; Revenue Overview
+            Overview
           </h1>
           <p className="text-xs text-[#3A9295] mt-1">
-            Real-time commercial loop • Station allocations • 0% marketplace commission engine.
+            Revenue and operations.
           </p>
         </div>
 
@@ -229,81 +226,66 @@ export default function DashboardOverviewPage() {
 
       {/* Executive Financial & Performance Matrix */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {/* Metric 1: Booked Volume */}
+        {/* Metric 1: Revenue */}
         <div className="p-5 rounded-3xl bg-white border border-[#105F68]/10 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Booked Volume</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Revenue</span>
             <DollarSign className="w-4 h-4 text-[#105F68]/50" />
           </div>
           <div className="mt-3">
             <h3 className="text-2xl sm:text-3xl font-light text-[#105F68]">
               ${(totalRevenue / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </h3>
-            <p className="text-[11px] text-[#3A9295] mt-1 flex items-center gap-1">
-              <span className="text-emerald-600 font-semibold">100%</span> direct to Stripe
-            </p>
           </div>
         </div>
 
-        {/* Metric 2: Deposits Secured */}
+        {/* Metric 2: Deposits */}
         <div className="p-5 rounded-3xl bg-white border border-[#105F68]/10 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Deposits Secured</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Deposits</span>
             <CreditCard className="w-4 h-4 text-[#63C1BB]" />
           </div>
           <div className="mt-3">
             <h3 className="text-2xl sm:text-3xl font-light text-[#105F68]">
               ${(depositsCollected / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </h3>
-            <p className="text-[11px] text-[#63C1BB] font-medium mt-1">
-              Upfront card verification
-            </p>
           </div>
         </div>
 
         {/* Metric 3: Fees Saved */}
         <div className="p-5 rounded-3xl bg-[#105F68] text-white border border-[#105F68] shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-[#C8E6E2] font-medium">Fees Retained</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#C8E6E2] font-medium">Fees saved</span>
             <Sparkles className="w-4 h-4 text-[#63C1BB]" />
           </div>
           <div className="mt-3">
             <h3 className="text-2xl sm:text-3xl font-light text-white">
               ${feesSaved.toLocaleString()}
             </h3>
-            <p className="text-[11px] text-[#C8E6E2] mt-1">
-              Saved vs 20% marketplace cut
-            </p>
           </div>
         </div>
 
         {/* Metric 4: Average Order Value */}
         <div className="p-5 rounded-3xl bg-white border border-[#105F68]/10 shadow-sm flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Average Ticket</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Avg. ticket</span>
             <TrendingUp className="w-4 h-4 text-emerald-600" />
           </div>
           <div className="mt-3">
             <h3 className="text-2xl sm:text-3xl font-light text-[#105F68]">
               ${(avgOrderValue / 100).toFixed(2)}
             </h3>
-            <p className="text-[11px] text-emerald-600 font-medium mt-1">
-              High-value protocol mix
-            </p>
           </div>
         </div>
 
         {/* Metric 5: Client Reliability */}
         <div className="p-5 rounded-3xl bg-white border border-[#105F68]/10 shadow-sm flex flex-col justify-between col-span-2 sm:col-span-1">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Reliability Shield</span>
+            <span className="text-[11px] uppercase tracking-wider text-[#3A9295] font-medium">Reliability</span>
             <ShieldCheck className="w-4 h-4 text-[#2E7D32]" />
           </div>
           <div className="mt-3">
             <h3 className="text-2xl sm:text-3xl font-light text-[#105F68]">98.5%</h3>
-            <p className="text-[11px] text-[#2E7D32] mt-1">
-              $25 No-Show late protection
-            </p>
           </div>
         </div>
       </div>
@@ -317,15 +299,12 @@ export default function DashboardOverviewPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h2 className="text-lg font-light text-[#105F68] tracking-tight">
-                    Today&apos;s Live Schedule &amp; Station Agenda
+                    Schedule
                   </h2>
                   <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#105F68]/10 text-[#105F68] font-bold">
                     {activeBookingsCount} Active
                   </span>
                 </div>
-                <p className="text-xs text-[#3A9295] mt-0.5">
-                  High-touch client timeline with 1-click completion and no-show enforcement.
-                </p>
               </div>
 
               <Link
@@ -344,7 +323,7 @@ export default function DashboardOverviewPage() {
                 <div className="py-10 text-center text-xs text-[#3A9295] space-y-2">
                   <CalendarIcon className="w-8 h-8 text-[#105F68]/30 mx-auto" />
                   <p className="font-semibold text-[#105F68]">No appointments scheduled for today</p>
-                  <p>Bookings created through your Ovelink booking page will appear here live.</p>
+                  <p>Bookings will appear here.</p>
                 </div>
               ) : (
                 bookings.map((b) => (
@@ -450,11 +429,8 @@ export default function DashboardOverviewPage() {
                 </div>
                 <div>
                   <h4 className="text-xs font-semibold text-[#105F68]">
-                    Looking for Station Filter &amp; Roster Management?
+                    Roster
                   </h4>
-                  <p className="text-[11px] text-[#3A9295]">
-                    Access equipment bays, status filtering, CRM dossier histories, and manual scheduling.
-                  </p>
                 </div>
               </div>
 
@@ -463,7 +439,7 @@ export default function DashboardOverviewPage() {
                 onClick={() => playClick()}
                 className="px-4 py-2 rounded-xl bg-[#105F68] hover:bg-[#0D4F57] text-white text-xs font-medium transition-all shrink-0 shadow-sm"
               >
-                Go to Dedicated Roster →
+                Open roster
               </Link>
             </div>
           </div>
@@ -477,11 +453,11 @@ export default function DashboardOverviewPage() {
               <div className="flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-[#105F68]" />
                 <h3 className="text-sm font-semibold text-[#105F68]">
-                  Station &amp; Equipment Bays
+                  Stations
                 </h3>
               </div>
               <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">
-                Live Status
+                Status
               </span>
             </div>
 
@@ -536,7 +512,7 @@ export default function DashboardOverviewPage() {
                     <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800">Ready</span>
                   </div>
                   <p className="text-[10px] text-[#3A9295] mt-0.5">
-                    Available for express protocols
+                    Available
                   </p>
                 </div>
                 <span className="text-[10px] font-mono text-emerald-700 font-bold">Open</span>
@@ -550,7 +526,7 @@ export default function DashboardOverviewPage() {
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-[#105F68]" />
                 <h3 className="text-sm font-semibold text-[#105F68]">
-                  Specialist Roster
+                  Staff
                 </h3>
               </div>
               <Link
@@ -600,11 +576,11 @@ export default function DashboardOverviewPage() {
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#63C1BB]" />
               <h3 className="text-xs font-semibold uppercase tracking-wider text-[#C8E6E2]">
-                Instant-Fill Waitlist Radar
+                Waitlist
               </h3>
             </div>
             <p className="text-xs text-[#E0F2F1] leading-relaxed">
-              {waitlist.filter((entry) => entry.status === "waiting").length} guest(s) are waiting. When an opening occurs, click below to ping the next match via WhatsApp.
+              {waitlist.filter((entry) => entry.status === "waiting").length} waiting. Notify the next match on WhatsApp.
             </p>
             <button
               onClick={() => {
@@ -613,7 +589,7 @@ export default function DashboardOverviewPage() {
               }}
               className="w-full py-2 rounded-xl bg-white text-[#105F68] text-xs font-semibold hover:bg-[#F6FAF9] transition-all flex items-center justify-center gap-1.5 shadow-sm"
             >
-              <span>Broadcast to Waitlist</span>
+              <span>Notify waitlist</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -631,11 +607,8 @@ export default function DashboardOverviewPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-semibold text-[#105F68]">
-                    Smart Instant-Fill Waitlist Engine
+                    Waitlist
                   </h3>
-                  <p className="text-[11px] text-[#3A9295]">
-                    Automatic revenue recovery when high-demand slots cancel.
-                  </p>
                 </div>
               </div>
 
@@ -648,17 +621,17 @@ export default function DashboardOverviewPage() {
             </div>
 
             <p className="text-xs text-[#103438] leading-relaxed">
-              When an opening occurs, Ovel instantly pings your top waitlisted clients on WhatsApp. The first to tap locks the slot automatically with zero manual calling.
+              Notify waitlisted clients on WhatsApp. The first to claim gets the slot.
             </p>
 
             <div className="space-y-2.5">
               <h4 className="text-[11px] uppercase tracking-wider text-[#3A9295] font-semibold">
-                Queued Waitlist Clients
+                Waiting
               </h4>
               {waitlist.length === 0 ? (
                 <div className="p-6 rounded-2xl bg-[#F6FAF9] border border-black/5 text-center text-xs text-[#3A9295] space-y-1">
                   <p className="font-medium text-[#105F68]">Waitlist queue is empty</p>
-                  <p className="text-[11px]">When fully booked, clients can join the waitlist to auto-claim cancelled slots.</p>
+                  <p className="text-[11px]">Clients can join when fully booked.</p>
                 </div>
               ) : (
                 waitlist.map((entry) => (
@@ -702,14 +675,14 @@ export default function DashboardOverviewPage() {
                 className="px-4 py-2 rounded-xl bg-[#2E7D32] hover:bg-[#1B5E20] text-white text-xs font-light transition-all flex items-center gap-1.5 shadow-sm"
               >
                 <Zap className="w-3.5 h-3.5" />
-                <span>Simulate WhatsApp Instant-Fill Blast</span>
+                <span>Send WhatsApp</span>
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* MODAL: Single-Use VIP Booking Link */}
+      {/* MODAL: VIP link */}
       {isSingleUseModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
           <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 space-y-4 border border-black/10">
@@ -717,7 +690,7 @@ export default function DashboardOverviewPage() {
               <div className="flex items-center gap-2">
                 <Lock className="w-5 h-5 text-[#105F68]" />
                 <h3 className="text-base font-semibold text-[#105F68]">
-                  Single-Use VIP Booking Link
+                  VIP link
                 </h3>
               </div>
               <button
@@ -729,7 +702,7 @@ export default function DashboardOverviewPage() {
             </div>
 
             <p className="text-xs text-[#3A9295] leading-relaxed">
-              This private URL will self-destruct after exactly <b>one</b> appointment is booked. VIP clients cannot forward or reuse private slots.
+              This link expires after one booking.
             </p>
 
             <div className="p-3 rounded-2xl bg-[#F6FAF9] border border-black/10 flex items-center justify-between gap-2">

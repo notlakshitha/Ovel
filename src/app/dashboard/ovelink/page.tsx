@@ -82,7 +82,7 @@ export default function OvelinkStudioPage() {
     playSuccess();
     saveOvelink(activeOvelink);
     updateOrganizationDetails(activeOvelink.businessName, activeOvelink.slug);
-    showToast(`Ovelink for "${activeOvelink.businessName}" saved & published!`);
+    showToast(`Ovelink saved.`);
   };
 
   const handleApplyThemePreset = (preset: OvelinkThemePreset) => {
@@ -171,20 +171,20 @@ export default function OvelinkStudioPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl sm:text-2xl font-light text-[#105F68] tracking-tight">
-              Ovelink Studio (Customizer)
+              Ovelink
             </h1>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold">
-              Live &amp; Synced
+              Saved
             </span>
           </div>
           <p className="text-xs text-[#3A9295] mt-1">
-            Customize your brand colors, typography fonts, cover header, and catalog offerings.
+            Brand and catalog.
           </p>
         </div>
 
         {/* Niche Presets Switcher */}
         <div className="flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="text-[#3A9295] hidden xl:inline text-[11px]">Niche Templates:</span>
+          <span className="text-[#3A9295] hidden xl:inline text-[11px]">Templates:</span>
           <button
             onClick={() => handleSwitchOvelinkTemplate("leclat")}
             className={`text-[11px] px-2.5 py-1 rounded-full border transition-all ${
@@ -242,7 +242,7 @@ export default function OvelinkStudioPage() {
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#2E7D32] text-white text-xs font-semibold hover:bg-[#1B5E20] transition-all shadow-md"
           >
             <Save className="w-3.5 h-3.5" />
-            <span>Save &amp; Publish</span>
+            <span>Save</span>
           </button>
         </div>
       </div>
@@ -257,7 +257,7 @@ export default function OvelinkStudioPage() {
               { id: "branding" as const, label: "Branding & Bio", icon: Building2 },
               { id: "themes" as const, label: "Colors & Palettes", icon: Palette },
               { id: "style" as const, label: "Typography & Shapes", icon: Type },
-              { id: "offerings" as const, label: "Offerings & Pricing", icon: ShoppingBag },
+              { id: "offerings" as const, label: "Offerings", icon: ShoppingBag },
               { id: "socials" as const, label: "Socials & WhatsApp", icon: Phone },
             ].map((sub) => {
               const Icon = sub.icon;
@@ -326,7 +326,7 @@ export default function OvelinkStudioPage() {
                   />
                 </div>
                 <div>
-                  <label className="text-[#3A9295] font-medium block mb-1">Public Brand Contact Email</label>
+                  <label className="text-[#3A9295] font-medium block mb-1">Contact email</label>
                   <input
                     type="email"
                     placeholder="hello@yourbrand.com"
@@ -474,7 +474,7 @@ export default function OvelinkStudioPage() {
           {studioSubTab === "style" && (
             <div className="space-y-6 text-xs animate-in fade-in duration-150">
               <div>
-                <label className="text-[#3A9295] font-medium block mb-2">Typography &amp; Brand Font</label>
+                <label className="text-[#3A9295] font-medium block mb-2">Font</label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   {[
                     { font: "Kaleko 105" as OvelinkFont, desc: "Modern Geometric", style: "font-['Kaleko_105']" },
@@ -561,9 +561,9 @@ export default function OvelinkStudioPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-semibold text-[#105F68] uppercase tracking-wider">
-                    Published Offerings ({activeOvelink.offerings.length})
+                    Offerings ({activeOvelink.offerings.length})
                   </h4>
-                  <p className="text-[#3A9295]">Supports Appointments, Bookings &amp; Orders</p>
+                  <p className="text-[#3A9295]">Appointments, bookings, orders.</p>
                 </div>
 
                 <button
@@ -571,7 +571,7 @@ export default function OvelinkStudioPage() {
                   className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#105F68] text-white font-light text-xs hover:bg-[#0D4F57] transition-all"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>Add Offering</span>
+                  <span>Add offering</span>
                 </button>
               </div>
 
@@ -685,7 +685,7 @@ export default function OvelinkStudioPage() {
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs uppercase font-semibold text-[#105F68] tracking-wider flex items-center gap-1.5">
-              <span>Live Customer Device Preview</span>
+              <span>Preview</span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             </span>
 
@@ -747,7 +747,6 @@ export default function OvelinkStudioPage() {
                 </div>
                 <div>
                   <h3 className="text-lg font-light text-[#105F68]">Add Offering</h3>
-                  <p className="text-xs text-[#3A9295]">Configure appointment, booking or order item</p>
                 </div>
               </div>
               <button onClick={() => setIsAddOfferingOpen(false)} className="text-gray-400 hover:text-black">
@@ -849,7 +848,7 @@ export default function OvelinkStudioPage() {
                   type="submit"
                   className="px-5 py-2 rounded-full bg-[#105F68] text-white text-xs font-semibold hover:bg-[#0D4F57]"
                 >
-                  Publish Offering
+                  Add offering
                 </button>
               </div>
             </form>

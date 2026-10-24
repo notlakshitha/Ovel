@@ -12,10 +12,10 @@ export default function DashboardQuotesPage() {
     <div className="space-y-6 animate-in fade-in duration-200">
       <div>
         <h1 className="text-2xl sm:text-3xl font-light text-[#105F68] tracking-tight">
-          Interactive Quotes &amp; Proposals Pipeline
+          Quotes
         </h1>
         <p className="text-xs text-[#3A9295] mt-1">
-          Dynamic quotes auto-convert to confirmed bookings and deposit invoices upon client digital signature.
+          Proposals.
         </p>
       </div>
 
@@ -24,9 +24,9 @@ export default function DashboardQuotesPage() {
           <div className="w-12 h-12 rounded-2xl bg-[#C8E6E2]/40 text-[#105F68] flex items-center justify-center mx-auto">
             <FileText className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-light text-[#105F68]">No interactive quotes drafted yet</h3>
+          <h3 className="text-base font-light text-[#105F68]">No quotes yet</h3>
           <p className="text-xs text-[#3A9295] max-w-md mx-auto">
-            Proposals with optional add-on toggles, e-signatures, and auto-deposit collection will appear here.
+            Quotes will appear here.
           </p>
         </div>
       ) : (
@@ -71,7 +71,7 @@ export default function DashboardQuotesPage() {
                   className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#105F68] text-white text-xs font-light hover:bg-[#0D4F57] transition-all"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Open Interactive Client Proposal</span>
+                  <span>Open quote</span>
                 </Link>
               </div>
             </div>

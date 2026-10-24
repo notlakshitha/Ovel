@@ -42,17 +42,17 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/roster", label: "Appointment Roster", icon: CalendarIcon, badge: "Live" },
-  { href: "/dashboard/users", label: "Users & Clients", icon: UserCheck, badge: "CRM" },
-  { href: "/dashboard/ovelink", label: "Ovelink Studio", icon: Palette, badge: "Customizer" },
-  { href: "/dashboard/services", label: "Catalog & Offerings", icon: ShoppingBag },
-  { href: "/dashboard/staff", label: "Specialists & Roster", icon: Users },
-  { href: "/dashboard/invoices", label: "Invoices & Payouts", icon: CreditCard },
-  { href: "/dashboard/reminders", label: "WhatsApp CRM", icon: MessageSquare },
-  { href: "/dashboard/quotes", label: "Proposals & Quotes", icon: FileText },
-  { href: "/dashboard/reviews", label: "Reviews & Reputation", icon: Star, badge: "Moat" },
-  { href: "/dashboard/team", label: "Team & Auth Control", icon: ShieldCheck },
-  { href: "/dashboard/settings", label: "Brand Settings", icon: Settings, badge: "Identity" },
+  { href: "/dashboard/roster", label: "Roster", icon: CalendarIcon },
+  { href: "/dashboard/users", label: "Clients", icon: UserCheck },
+  { href: "/dashboard/ovelink", label: "Ovelink", icon: Palette },
+  { href: "/dashboard/services", label: "Services", icon: ShoppingBag },
+  { href: "/dashboard/staff", label: "Staff", icon: Users },
+  { href: "/dashboard/invoices", label: "Invoices", icon: CreditCard },
+  { href: "/dashboard/reminders", label: "Reminders", icon: MessageSquare },
+  { href: "/dashboard/quotes", label: "Quotes", icon: FileText },
+  { href: "/dashboard/reviews", label: "Reviews", icon: Star },
+  { href: "/dashboard/team", label: "Team", icon: ShieldCheck },
+  { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
 export default function DashboardLayout({
@@ -98,9 +98,6 @@ export default function DashboardLayout({
           <Link href="/" className="flex items-center group">
             <span className="font-['Disolve'] text-2xl text-[#105F68] tracking-tight">Ovel</span>
           </Link>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#63C1BB]/20 text-[#105F68] font-medium">
-            0% Cut
-          </span>
         </div>
 
         {/* Business Tenant Identity */}
@@ -126,7 +123,7 @@ export default function DashboardLayout({
               <Link
                 href={`/l/${activeOvelink.slug}`}
                 target="_blank"
-                title="Open Live Ovelink"
+                title="Open Ovelink"
                 className="p-1 text-[#105F68] hover:bg-[#F6FAF9] rounded transition-colors"
               >
                 <ExternalLink className="w-3 h-3" />
@@ -215,13 +212,9 @@ export default function DashboardLayout({
               {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
 
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[#3A9295]">Merchant Operating Hub</span>
-              <span className="text-xs text-[#3A9295] hidden sm:inline">•</span>
-              <span className="text-xs font-semibold text-[#105F68] hidden sm:inline">
-                {activeOvelink.businessName}
-              </span>
-            </div>
+            <span className="text-xs font-semibold text-[#105F68]">
+              {activeOvelink.businessName}
+            </span>
           </div>
 
           <div className="flex items-center gap-3">
@@ -231,7 +224,7 @@ export default function DashboardLayout({
               className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#105F68]/20 bg-white text-xs text-[#105F68] hover:bg-[#105F68]/5 transition-all shadow-sm"
             >
               <ExternalLink className="w-3.5 h-3.5 text-[#3A9295]" />
-              <span>View Live Ovelink</span>
+              <span>View Ovelink</span>
             </Link>
 
             <UserAuthNav />

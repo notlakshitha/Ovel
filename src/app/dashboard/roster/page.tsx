@@ -112,7 +112,7 @@ export default function DashboardRosterPage() {
       playSuccess();
       showToast(`$25.00 no-show fee charged to card •••• ${updated.cardLast4}.`);
     } else {
-      showToast("No-show fee was not charged. A card must be on file, and the booking cannot already be closed.");
+      showToast("No-show fee not charged. Add a card or reopen the booking.");
     }
   };
 
@@ -123,7 +123,7 @@ export default function DashboardRosterPage() {
       b.id === bookingId ? { ...b, status: "completed" as const } : b
     );
     saveBookings(updated);
-    showToast("Booking marked completed! Triggered automatic review request.");
+    showToast("Booking completed.");
   };
 
   const handleOpenClientDossier = (clientName: string) => {
@@ -153,7 +153,7 @@ export default function DashboardRosterPage() {
     const priceCents = dollarsToCents(newPrice);
     const depositCents = dollarsToCents(newDeposit);
     if (priceCents == null || depositCents == null || depositCents > priceCents) {
-      showToast("Enter a valid price and a deposit that does not exceed it.");
+      showToast("Deposit must not exceed price.");
       return;
     }
     const startTime = `${localDateString(new Date())}T${newTime}:00`;
@@ -200,14 +200,11 @@ export default function DashboardRosterPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-light text-[#105F68] tracking-tight">
-              Appointment &amp; Order Roster
+              Roster
             </h1>
-            <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-[#105F68]/10 text-[#105F68] font-semibold uppercase tracking-wider">
-              Live Matrix
-            </span>
           </div>
           <p className="text-xs text-[#3A9295] mt-1">
-            Includes equipment &amp; station allocation, card-on-file status, and 1-click no-show enforcement.
+            Appointments and orders.
           </p>
         </div>
 
@@ -220,7 +217,7 @@ export default function DashboardRosterPage() {
             className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#105F68] hover:bg-[#0D4F57] text-white text-xs font-medium transition-all shadow-md shadow-[#105F68]/20"
           >
             <Plus className="w-3.5 h-3.5 text-[#63C1BB]" />
-            <span>New Appointment / Order</span>
+            <span>New booking</span>
           </button>
         </div>
       </div>
@@ -233,7 +230,7 @@ export default function DashboardRosterPage() {
             <Search className="w-4 h-4 text-[#3A9295] absolute left-3.5 top-3" />
             <input
               type="text"
-              placeholder="Search by client name, service, specialist, phone, or station..."
+              placeholder="Search bookings..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F6FAF9] border border-black/10 text-xs text-[#105F68] focus:outline-none focus:border-[#105F68] transition-all"
@@ -248,7 +245,7 @@ export default function DashboardRosterPage() {
               onChange={(e) => setSelectedStation(e.target.value)}
               className="px-3 py-2 rounded-2xl bg-[#F6FAF9] border border-black/10 text-xs text-[#105F68] focus:outline-none focus:border-[#105F68]"
             >
-              <option value="all">All Stations &amp; Bays</option>
+              <option value="all">All stations</option>
               <option value="Room 1">Room 1 (Aesthetic Suite)</option>
               <option value="Room 2">Room 2 (Laser Bay)</option>
               <option value="Room 3">Room 3 (Barrier Clinical)</option>
@@ -260,7 +257,7 @@ export default function DashboardRosterPage() {
         {/* Status Filter Chips */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none pt-1">
           {[
-            { id: "all", label: "All Bookings" },
+            { id: "all", label: "All" },
             { id: "confirmed", label: "Confirmed" },
             { id: "rescheduled", label: "Rescheduled" },
             { id: "completed", label: "Completed" },
@@ -294,10 +291,10 @@ export default function DashboardRosterPage() {
             <thead>
               <tr className="border-b border-black/5 text-[#3A9295] uppercase tracking-wider font-semibold">
                 <th className="pb-3">Time &amp; Station</th>
-                <th className="pb-3">Client / CRM Dossier</th>
-                <th className="pb-3">Treatment / Order</th>
+                <th className="pb-3">Client</th>
+                <th className="pb-3">Service</th>
                 <th className="pb-3">Specialist</th>
-                <th className="pb-3">Card on File</th>
+                <th className="pb-3">Card</th>
                 <th className="pb-3">Status</th>
                 <th className="pb-3 text-right">Actions</th>
               </tr>
@@ -310,9 +307,9 @@ export default function DashboardRosterPage() {
                       <div className="w-10 h-10 rounded-2xl bg-[#C8E6E2]/40 text-[#105F68] flex items-center justify-center">
                         <CalendarIcon className="w-5 h-5 text-[#105F68]" />
                       </div>
-                      <p className="font-semibold text-sm text-[#105F68]">No matching bookings found</p>
+                      <p className="font-semibold text-sm text-[#105F68]">No bookings found</p>
                       <p className="text-[11px] text-[#3A9295]">
-                        Clear your filters or schedule a new reservation to see it listed here.
+                        Clear filters or add a booking.
                       </p>
                     </div>
                   </td>
@@ -342,7 +339,7 @@ export default function DashboardRosterPage() {
                       )}
                     </td>
 
-                    {/* Client / CRM Dossier */}
+                    {/* Client */}
                     <td className="py-4">
                       <button
                         onClick={() => handleOpenClientDossier(b.clientName)}
@@ -356,7 +353,7 @@ export default function DashboardRosterPage() {
                       </span>
                     </td>
 
-                    {/* Treatment / Order */}
+                    {/* Service */}
                     <td className="py-4">
                       <span className="text-[#105F68] font-semibold block leading-tight">
                         {b.serviceName}
@@ -374,7 +371,7 @@ export default function DashboardRosterPage() {
                       {b.staffName}
                     </td>
 
-                    {/* Card on File */}
+                    {/* Card */}
                     <td className="py-4">
                       {b.hasCardOnFile ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-800 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-full">
@@ -403,7 +400,7 @@ export default function DashboardRosterPage() {
                       </span>
                       {b.isNoShow && (
                         <span className="block mt-1 text-[10px] text-rose-600 font-bold">
-                          ⚠️ No-Show Penalty Billed
+                          ⚠️ No-show fee charged
                         </span>
                       )}
                     </td>
@@ -427,7 +424,7 @@ export default function DashboardRosterPage() {
                             title="1-Click $25 No-Show Enforcement Charge"
                           >
                             <ShieldAlert className="w-3 h-3 text-rose-600" />
-                            <span>No-Show Fee</span>
+                            <span>No-show</span>
                           </button>
                         )}
 
@@ -484,7 +481,7 @@ export default function DashboardRosterPage() {
                 </span>
               </div>
               <div className="p-3 rounded-2xl bg-[#F6FAF9] border border-black/5">
-                <span className="text-[10px] text-[#3A9295] block uppercase font-medium">Completed Visits</span>
+                <span className="text-[10px] text-[#3A9295] block uppercase font-medium">Visits</span>
                 <span className="text-base font-bold text-[#105F68]">
                   {selectedClientProfile.totalVisits}
                 </span>
@@ -506,7 +503,7 @@ export default function DashboardRosterPage() {
             {selectedClientProfile.formulasOrNotes && (
               <div className="p-3.5 rounded-2xl bg-[#F6FAF9] border border-black/5 text-xs text-slate-700 space-y-1">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-[#3A9295] block">
-                  Formulas &amp; Treatment History
+                  Notes
                 </span>
                 <p className="leading-relaxed font-mono text-[11px]">
                   {selectedClientProfile.formulasOrNotes}
@@ -535,16 +532,13 @@ export default function DashboardRosterPage() {
         </div>
       )}
 
-      {/* MODAL: New Appointment / Order Booking */}
+      {/* MODAL: New booking */}
       {isAddBookingOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-4 shadow-2xl border border-black/10">
             <div className="flex items-center justify-between pb-3 border-b border-black/10">
               <div>
-                <h3 className="text-lg font-bold text-[#105F68]">New Appointment or Order</h3>
-                <p className="text-xs text-[#3A9295]">
-                  Schedule directly onto the roster with station allocation.
-                </p>
+                <h3 className="text-lg font-bold text-[#105F68]">New booking</h3>
               </div>
               <button
                 onClick={() => setIsAddBookingOpen(false)}
@@ -556,7 +550,7 @@ export default function DashboardRosterPage() {
 
             <form onSubmit={handleCreateManualBooking} className="space-y-3 text-xs">
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">Client Full Name</label>
+                <label className="font-semibold text-slate-700 block mb-1">Client</label>
                 <input
                   type="text"
                   required
@@ -591,7 +585,7 @@ export default function DashboardRosterPage() {
               </div>
 
               <div>
-                <label className="font-semibold text-slate-700 block mb-1">Treatment / Order</label>
+                <label className="font-semibold text-slate-700 block mb-1">Service</label>
                 <input
                   type="text"
                   required
@@ -637,7 +631,7 @@ export default function DashboardRosterPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="font-semibold text-slate-700 block mb-1">Station / Bay</label>
+                  <label className="font-semibold text-slate-700 block mb-1">Station</label>
                   <select
                     value={newStation}
                     onChange={(e) => setNewStation(e.target.value)}
@@ -674,7 +668,7 @@ export default function DashboardRosterPage() {
                   className="px-5 py-2 rounded-full bg-[#105F68] hover:bg-[#0D4F57] text-white text-xs font-semibold shadow-md shadow-[#105F68]/20 flex items-center gap-1.5"
                 >
                   <Check className="w-3.5 h-3.5" />
-                  <span>Reserve Slot</span>
+                  <span>Save</span>
                 </button>
               </div>
             </form>
